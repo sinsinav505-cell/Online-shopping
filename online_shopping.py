@@ -90,14 +90,47 @@ class shopping:
 
 
     def view_cart(self):
-        if not cart:
+        if not cart: #if cart is empty 
             print("Cart is empty")
         else:
             print("Items in cart are:")
             for name,value in cart.items():
                 print(f"Item Name:{name} , Price:{value['price']} , Quantity:{value['quantity']}")
-                
-               
+
+
+    def buy_and_checkout(self):
+        if not cart:   
+            print("Cart is empty")
+            return
+
+        buy = int(input("Do you want to buy the products in the cart:"
+                        " \n 1.Yes \n 2.No \n Enter 1 or 2 : "))
+
+        if buy == 1:
+            print("\n ----- Checkout ----- ")
+            total = 0
+
+            for name, value in cart.items():
+                item_total = value["price"] * value["quantity"]
+                total += item_total
+                print(f"{name} ({value['quantity']} x {value['price']}) = {item_total}")
+
+            print(f"\n Total Amount = {total}")
+
+            clear_cart = int(input("\nDo you want to clear the cart after checkout?"
+                                " \n 1.Yes \n 2.No \n Enter 1 or 2: "))
+
+            if clear_cart == 1:
+                cart.clear()
+                print("Cart cleared. Thank you for shopping!")
+            else:
+                print("Cart not cleared. You can continue shopping.")
+
+        elif buy == 2:
+            print("Checkout cancelled.")
+        else:
+            print("Invalid option")
+                      
 
 
 obj=shopping()
@@ -121,7 +154,8 @@ def options():
         " \n  5.Add to cart"
         " \n  6.Remove from cart"
         " \n  7.View cart"
-        " \n  8.Exit" 
+        " \n  8.Buy and checkout"
+        " \n  9.Exit" 
         " \n Enter option:"))
         if op==1: #add product
             obj.add_items()
@@ -160,9 +194,13 @@ def options():
 
         elif op==7:  #view cart
             obj.view_cart()
+
+
+        elif op==8:  #buy and checkout
+            obj.buy_and_checkout()
    
 
-        elif op==8: #exit
+        elif op==9: #exit
             print("Bye")
             break
 
